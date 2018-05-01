@@ -97,3 +97,4 @@ ENV/
 
 # mypy
 .mypy_cache/
+/ctrl_sys/Client User/User Control/nbproject/private/
