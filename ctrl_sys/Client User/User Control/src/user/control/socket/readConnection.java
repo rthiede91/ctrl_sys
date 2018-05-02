@@ -9,6 +9,7 @@ package user.control.socket;
  *
  * @author Thiedes
  */
-public class readConnection {
+public class readConnection 
+{
     
 }
