@@ -32,14 +32,14 @@ public class connection
 				Scanner teclado = new Scanner(System.in); 
 				PrintStream saida = new PrintStream(cliente.getOutputStream())) 
                 {
-			System.out.println("O cliente se conectou ao servidor!");
-	
-			readConnection r = new readConnection(cliente.getInputStream());
-			new Thread(r).start();
-	
-			while (teclado.hasNextLine()) {
-				saida.println(teclado.nextLine());
-			}
+		
+                    readConnection r = new readConnection(cliente.getInputStream());
+                    new Thread(r).start();
+
+                    while (teclado.hasNextLine()) 
+                    {
+                            saida.println(teclado.nextLine());
+                    }
 		}
 	}
 }
