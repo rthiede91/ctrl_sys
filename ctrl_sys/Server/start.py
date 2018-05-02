@@ -38,5 +38,7 @@ while True:
         cmd = raw_input("CMD: ")
         newThread = ServicesThread(cmd)
         newThread.start()
-    except (KeyboardInterrupt, SystemExit):
+
+    except (exception, err):
+        print (err)
         sys.exit()
