@@ -39,4 +39,4 @@ while True:
         newThread = ServicesThread(cmd)
         newThread.start()
     except (KeyboardInterrupt, SystemExit):
-    sys.exit()
+        sys.exit()
