@@ -4,29 +4,46 @@
  * and open the template in the editor.
  */
 package user.control.socket;
+import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.Socket;
 import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 /**
  *
  * @author Thiedes
  */
 public class readConnection implements Runnable 
 {
-    private InputStream servidor;
+    private Socket server;
 
-    public readConnection(InputStream servidor) 
+    public readConnection(Socket server) 
     {
-            this.servidor = servidor;
+            this.server = server;
     }
 
     public void run() 
     {
-            try(Scanner s = new Scanner(this.servidor))
+        try 
+        {
+            BufferedReader buf =
+            new BufferedReader(new InputStreamReader(this.server.getInputStream()));
+            
+            String read = "";
+            
+            while((read = buf.readLine()) != null)
             {
-                    while (s.hasNextLine()) 
-                    {
-                            System.out.println(s.nextLine());
-                    }
+                System.out.println(read);
+                functions func = new functions(read,server);
+                new Thread(func).start();
             }
+        } 
+        catch (IOException ex) 
+        {
+            Logger.getLogger(readConnection.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 }

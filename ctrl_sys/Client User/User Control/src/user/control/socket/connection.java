@@ -8,38 +8,45 @@ package user.control.socket;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.net.Socket;
-import java.net.UnknownHostException;
 import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import user.control.login;
 
 /**
  *
  * @author Thiedes
  */
-public class connection 
+public class connection implements Runnable 
 {
 	private String host;
-	private int porta;
+	private int port;
 
-	public connection(String host, int porta)
+	public connection(String host, int port)
         {
 		this.host = host;
-		this.porta = porta;
+		this.port = port;
 	}
 
-	public void run() throws UnknownHostException, IOException 
+	public void run()
         {
-		try(Socket cliente = new Socket(this.host, this.porta); 
-				Scanner teclado = new Scanner(System.in); 
-				PrintStream saida = new PrintStream(cliente.getOutputStream())) 
+            try(Socket server = new Socket(this.host, this.port); 
+                Scanner cmd = new Scanner(System.in); 
+                PrintStream sendMsg = new PrintStream(server.getOutputStream())) 
+            {
+                readConnection r = new readConnection(server);
+                new Thread(r).start();
+                
+                while (cmd.hasNextLine()) 
                 {
-		
-                    readConnection r = new readConnection(cliente.getInputStream());
-                    new Thread(r).start();
+                    sendMsg.write(cmd.nextLine().getBytes());
+                }
+                
 
-                    while (teclado.hasNextLine()) 
-                    {
-                            saida.println(teclado.nextLine());
-                    }
-		}
+            } 
+            catch (IOException ex) 
+            {
+                Logger.getLogger(connection.class.getName()).log(Level.SEVERE, null, ex);
+            }
 	}
 }

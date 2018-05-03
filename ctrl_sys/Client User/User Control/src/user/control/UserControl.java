@@ -10,26 +10,29 @@ import java.net.Socket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import user.control.socket.connection;
+import user.control.socket.functions;
 
 /**
  *
  * @author Thiedes
  */
-public class UserControl {
-
+public class UserControl 
+{
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) 
+    public static void main(String[] args) throws InterruptedException 
     {
-        try 
+        for (int a=0;a<=100;a++)
         {
-            new connection("10.0.1.229", 8081).run();
-        } 
-        catch (IOException ex) 
-        {
-            Logger.getLogger(UserControl.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("tn: "+a);
+            Thread.sleep(100);
+            connection  conn = new connection("187.11.123.175", 8081);
+            new Thread(conn).start();
         }
+        
+
+        //new connection("187.11.123.175", 8081).run();
     }
     
 }
