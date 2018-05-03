@@ -5,12 +5,7 @@
  */
 package user.control;
 
-import java.io.IOException;
-import java.net.Socket;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import user.control.socket.connection;
-import user.control.socket.functions;
 
 /**
  *
@@ -23,15 +18,11 @@ public class UserControl
      */
     public static void main(String[] args) throws InterruptedException 
     {
-        for (int a=0;a<=100;a++)
-        {
-            System.out.println("tn: "+a);
-            Thread.sleep(100);
-            connection  conn = new connection("187.11.123.175", 8081);
-            new Thread(conn).start();
-        }
+ 
+        Thread.sleep(100);
+        connection  conn = new connection("10.0.1.229", 8081);
+        new Thread(conn).start();
         
-
         //new connection("187.11.123.175", 8081).run();
     }
     

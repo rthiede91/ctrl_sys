@@ -6,10 +6,8 @@
 package user.control.socket;
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.Socket;
-import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 /**
@@ -36,11 +34,21 @@ public class readConnection implements Runnable
             
             while((read = buf.readLine()) != null)
             {
-                System.out.println(read);
+                if (read.equals("startImage"))
+                {
+                    String blob;
+                    String blobImage = "";
+                    while(!(blob = buf.readLine()).equals("endImage"))
+                    {
+                        blobImage += blob;
+                    }
+                    read += ";"+blobImage;
+                }
+                
                 functions func = new functions(read,server);
                 new Thread(func).start();
             }
-        } 
+        }
         catch (IOException ex) 
         {
             Logger.getLogger(readConnection.class.getName()).log(Level.SEVERE, null, ex);
