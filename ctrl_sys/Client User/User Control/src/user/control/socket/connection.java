@@ -26,7 +26,7 @@ public class connection
 		this.porta = porta;
 	}
 
-	public void executa() throws UnknownHostException, IOException 
+	public void run() throws UnknownHostException, IOException 
         {
 		try(Socket cliente = new Socket(this.host, this.porta); 
 				Scanner teclado = new Scanner(System.in); 
