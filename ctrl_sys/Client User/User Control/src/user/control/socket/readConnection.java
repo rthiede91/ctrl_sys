@@ -34,7 +34,7 @@ public class readConnection implements Runnable
             
             while((read = buf.readLine()) != null)
             {
-                if (read.equals("startImage"))
+                if (read.equals("eventStart"))
                 {
                     String blob;
                     String blobImage = "";
@@ -42,7 +42,8 @@ public class readConnection implements Runnable
                     {
                         blobImage += blob;
                     }
-                    read += ";"+blobImage;
+                    String info = buf.readLine();
+                    read += ";"+blobImage+";"+info;
                 }
                 
                 functions func = new functions(read,server);

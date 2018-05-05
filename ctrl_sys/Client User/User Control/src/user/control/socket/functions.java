@@ -48,9 +48,7 @@ public class functions implements Runnable
                 InputStream in = blob.getBinaryStream();  
                 BufferedImage image = ImageIO.read(in);*/
                 
-                
-                viewer vw = new viewer();
-                    vw.show();
+
                     
             }
             
@@ -58,9 +56,6 @@ public class functions implements Runnable
             {
                
                 String [] data = cmd.split(";");
-                
-                
-                System.out.println(cmd);
 
                 Scanner s=new Scanner(System.in);  
                 
@@ -72,8 +67,14 @@ public class functions implements Runnable
                 byte[] base64Val=Base64.getDecoder().decode(base64);                
                 
                 File imgFile = new File("./pic.png");  
-                BufferedImage img = ImageIO.read(new ByteArrayInputStream(base64Val));  
-                ImageIO.write(img, "png", imgFile);
+                BufferedImage img = ImageIO.read(new ByteArrayInputStream(base64Val));
+                
+                                
+                viewer vw = new viewer();
+                    vw.show();
+                    vw.setimg(img);
+                
+                //ImageIO.write(img, "png", imgFile);
                 
                 sendMsg.write("ok".getBytes());
             

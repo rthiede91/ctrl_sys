@@ -41,8 +41,6 @@ public class connection implements Runnable
                 {
                     sendMsg.write(cmd.nextLine().getBytes());
                 }
-                
-
             } 
             catch (IOException ex) 
             {
