@@ -45,7 +45,7 @@ public class readConnection implements Runnable
                     String info = buf.readLine();
                     read += ";"+blobImage+";"+info;
                 }
-                
+        
                 functions func = new functions(read,server);
                 new Thread(func).start();
             }

@@ -1,0 +1,87 @@
+import socket, threading
+import os
+
+
+class ConnectionThread(threading.Thread):
+
+	def __init__(self, connection):
+
+		threading.Thread.__init__(self)
+		self.connection = connection
+
+	def run(self):
+		while True:
+			try:
+				datas = self.connection.recv(1024)
+				print("From Server: ", datas)
+
+				if datas == "bye" or datas == '':
+					self.connection.close()
+					break
+
+				if datas == "check":
+					self.connection.sendall("0")
+
+				if datas == "update":
+
+					print ("Update")
+
+					fileServer = socket.socket()
+					fileServer.connect((serverAddr, filePort))
+
+					update = 1;
+
+					while update == 1:
+
+						filename = fileServer.recv(1024)
+						print ("Receiving : ", filename)
+
+						recvFile = open(filename, 'w+b')
+
+						fileServer.send('send')
+
+						FLength = fileServer.recv(1024)
+
+						while (FLength):
+							recvFile.write(FLength)
+							FLength = fileServer.recv(1024)
+
+						recvFile.close()
+
+						update = fileServer.recv(1024)
+
+					fileServer.close()
+
+
+				data = datas.split(";")
+					
+				if data[0] == 'run':
+					os.system(data[1])
+
+			except Exception, msg:
+				print ("OPA ", msg)
+				break
+				self.connection.close()
+
+
+def sendMsg(self, msg):
+	self.connection.sendall(bytes(msg))
+
+
+serverAddr = "10.0.1.229"
+port = 8080
+filePort = 8081
+
+server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+server.connect((serverAddr, port))
+
+newThread = ConnectionThread(server)
+newThread.start()
+
+while True:
+	out_data = raw_input("msg: ")
+	server.sendall(bytes(out_data))
+	if out_data=='bye':
+		break
+
+server.close()
